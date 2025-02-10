@@ -16,3 +16,4 @@ Gaik Hwa:
 Alexa: 
 1. Add a New Recipe
 2. Favorite Function and Section
+3. tweaked CSS Recipe card abit (workouts)
