@@ -11,15 +11,18 @@ Anderton:
 4. Login
 5. Log Out
 6. Database MongoDB
+
 Sonia:
 1. Display All Recipes
 2. Delete Recipe.
 3. Search Bar.
 4. Styling of CSS.
+
 Gaik Hwa:
 1. Sign Up
 2. Login
 3. Log Out
+   
 Alexa: 
 1. Add a New Recipe
 2. Favorite Function and Section
