@@ -1,13 +1,24 @@
 import { useRecipesContext } from '../hooks/useRecipesContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
 const RecipeDetails = ({ recipe }) => {
     const { dispatch } = useRecipesContext();
+    const { user } = useAuthContext()
 
     const handleClick = async () => {
-        const response = await fetch('/api/recipes/' + recipe._id, {
-            method: 'DELETE'
-        });
+
+        if (!user) {
+            return
+        }
+
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/recipes/${recipe._id}`, {
+            method: "DELETE",
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        })
+
         const json = await response.json();
 
         if (response.ok) {
@@ -16,7 +27,7 @@ const RecipeDetails = ({ recipe }) => {
     };
 
     return (
-        <div className="recipe-details">
+        <div className="workout-details">
             <h4>{recipe.name}</h4>
             <p><strong>Ingredients: </strong>{recipe.ingredients.join(", ")}</p>
             <p><strong>Instructions: </strong>{recipe.instructions}</p>
