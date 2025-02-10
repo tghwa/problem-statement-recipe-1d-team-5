@@ -1,15 +1,17 @@
 import { useAuthContext } from "./useAuthContext";
-import {useRecipesContext} from './useRecipesContext'
+import { useRecipesContext } from './useRecipesContext'
 
 export const useLogout = () => {
-    const dispatch = useAuthContext()
-    const { dispatch: dispatchReceipts } = useRecipesContext()
+    const { dispatch } = useAuthContext(); // Correct destructuring
+    const { dispatch: dispatchRecipes } = useRecipesContext();
 
     const logout = () => {
         localStorage.removeItem('user')
 
-        dispatch({type: 'LOGOUT'})
-        dispatchReceipts({type: 'SET_RECEIPTS', payload: null})
+        dispatch({ type: "LOGOUT" });
+
+        // Clear recipes in RecipesContext
+        dispatchRecipes({ type: "SET_RECIPES", payload: [] }); // Set to an empty array
     }
 
     return { logout }
