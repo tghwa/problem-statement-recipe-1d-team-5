@@ -3,7 +3,7 @@ import { useRecipesContext } from "../hooks/useRecipesContext"
 
 // components
 import RecipeDetails from "../components/RecipeDetails"
-// import WorkoutForm from "../components/WorkoutForm"
+import RecipeForm  from "../components/RecipeForm"
 
 const Home = () => {
   const { recipes, dispatch } = useRecipesContext()
@@ -28,7 +28,7 @@ const Home = () => {
           <RecipeDetails workout={recipe} key={recipe._id} />
         ))}
       </div>
-      {/* <WorkoutForm /> */}
+      <RecipeForm />
     </div>
   )
 }
