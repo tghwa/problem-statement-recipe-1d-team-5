@@ -1,10 +1,10 @@
 import { useState } from "react"
-import { useRecipieContext } from "../hooks/useRecipieContext"
+import { useRecipeContext } from "../hooks/useRecipeContext"
 import { useAuthContext } from '../hooks/useAuthContext'
 
 const RecipeForm = () => {
   const { user } = useAuthContext()
-  const { dispatch } = useRecipieContext() 
+  const { dispatch } = useRecipeContext() 
 
   const [name, setName] = useState('')
   const [ingredients, setIngredients] = useState('')
