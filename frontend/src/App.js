@@ -3,29 +3,24 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 // pages & components
 import Home from './pages/Home';
-// import Login from './pages/Login';
-// import Signup from './pages/Signup';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 import Navbar from './components/Navbar';
 // import WorkoutEdit from './pages/WorkoutEdit';
 
 function App() {
-  // const { user } = useAuthContext()
+  const { user } = useAuthContext()
 
   return (
     <div className="App">
       <BrowserRouter>
         <Navbar />
         <div className="pages">
-          <Routes>
             <Route
-            path="/"
-            element={<Home />}
-            />
-            {/* <Route
               path="/" // root path
               element={user ? <Home /> : <Navigate to="/login" />} // Home.js
-            /> */}
-            {/* <Route
+            />
+            <Route
               path="/login"
               element={!user ? <Login /> : <Navigate to="/" />}
             />
@@ -33,8 +28,7 @@ function App() {
               path="/signup"
               element={!user ? <Signup /> : <Navigate to="/" />}
             />
-            <Route path="/edit/:id" element={<WorkoutEdit />} /> */}
-          </Routes>
+            {/* <Route path="/edit/:id" element={<WorkoutEdit />} /> */}
         </div>
       </BrowserRouter>
     </div>
