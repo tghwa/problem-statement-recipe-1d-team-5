@@ -88,7 +88,7 @@ const RecipeForm = () => {
         className={emptyFields.includes('prepTime') ? 'error' : ''}
       />
 
-      <label>Difficulty Level:</label>
+      <label>Difficulty Level:
       <select 
         onChange={(e) => setDifficulty(e.target.value)}
         value={difficulty}
@@ -98,6 +98,7 @@ const RecipeForm = () => {
         <option value="medium">Medium</option>
         <option value="hard">Hard</option>
       </select>
+      </label>
 
       <button>Add Recipe</button>
       {error && <div className="error">{error}</div>}
