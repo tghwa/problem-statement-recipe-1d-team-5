@@ -4,7 +4,9 @@
 
 # Task Description
 
-Anderton: 
+Anderton:
+1. Updating a Recipe
+2. AI Integration
 Sonia:
 1. Display All Recipes
 2. Delete Recipe.
