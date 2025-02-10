@@ -4,15 +4,15 @@ export const RecipesContext = createContext();
 
 export const recipesReducer = (state, action) => {
     switch (action.type) {
-        case 'SET_RECIPES':
+        case 'SET_RECIPE':
             return {
                 recipes: action.payload
             }
-        case 'CREATE_RECIPES':
+        case 'CREATE_RECIPE':
             return {
                 recipes: [action.payload, ...state.workouts]
             }
-        case 'DELETE_RECIPES':
+        case 'DELETE_RECIPE':
             return {
                 recipes: state.recipes.filter((w) => w._id !== action.payload._id )
             }
