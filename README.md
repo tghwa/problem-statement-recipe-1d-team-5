@@ -5,6 +5,6 @@
 # Task Description
 
 Anderton: 
-Sonia:
+Sonia: Display All Recipes and Delete Recipe.
 Gaik Hwa:
 Alexa: 1. Add a New Recipe
