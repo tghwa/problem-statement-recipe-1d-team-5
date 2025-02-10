@@ -11,5 +11,6 @@ Sonia:
 1. Display All Recipes
 2. Delete Recipe.
 3. Search Bar.
+4. Styling of CSS.
 Gaik Hwa:
 Alexa: 1. Add a New Recipe
