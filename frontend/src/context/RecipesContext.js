@@ -6,6 +6,7 @@ export const recipesReducer = (state, action) => {
     switch (action.type) {
         case 'SET_RECIPE':
             return {
+<<<<<<< HEAD
                 recipes: action.payload
             }
         case 'CREATE_RECIPE':
@@ -13,16 +14,26 @@ export const recipesReducer = (state, action) => {
                 recipes: [action.payload, ...state.workouts]
             }
         case 'DELETE_RECIPE':
+=======
+                recipes: action.payload, // Replace the existing recipes with the payload
+            };
+        case 'CREATE_RECIPE':
             return {
-                recipes: state.recipes.filter((w) => w._id !== action.payload._id )
-            }
+                recipes: [action.payload, ...state.recipes], // Add a new recipe to the list
+            };
+        case 'DELETE_RECIPE': // Fix the action type to match dispatch calls
+>>>>>>> 92ef9dbc4b63dfe0aed214102b9dc7cadf927818
+            return {
+                recipes: state.recipes.filter((recipe) => recipe._id !== action.payload._id), // Remove the recipe by ID
+            };
         default:
-            return state
+            console.log("Unknown action type:", action.type);
+            return state;
     }
-}
+};
 
 export const RecipesContextProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(recipesReducer, { recipes: null })
+    const [state, dispatch] = useReducer(recipesReducer, { recipes: [] })
 
     return (
         <RecipesContext.Provider value={{ ...state, dispatch }}>
