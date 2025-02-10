@@ -1,8 +1,10 @@
 import { useState } from "react"
+import { useRecipieContext } from "../hooks/useRecipieContext"
 import { useAuthContext } from '../hooks/useAuthContext'
 
 const RecipeForm = () => {
   const { user } = useAuthContext()
+  const { dispatch } = useRecipieContext() 
 
   const [name, setName] = useState('')
   const [ingredients, setIngredients] = useState('')
@@ -22,28 +24,32 @@ const RecipeForm = () => {
 
     const recipe = { name, ingredients: ingredients.split(','), instructions, prepTime, difficulty }
 
-    const response = await fetch('/api/recipes', {
-      method: 'POST',
-      body: JSON.stringify(recipe),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${user.token}`
-      }
-    })
-    const json = await response.json()
+    try {
+      const response = await fetch('/api/recipes', {
+        method: 'POST',
+        body: JSON.stringify(recipe),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`
+        }
+      })
+      const json = await response.json()
 
-    if (!response.ok) {
-      setError(json.error)
-      setEmptyFields(json.emptyFields || [])
-    }
-    if (response.ok) {
-      setName('')
-      setIngredients('')
-      setInstructions('')
-      setPrepTime('')
-      setDifficulty('easy')
-      setError(null)
-      setEmptyFields([])
+      if (!response.ok) {
+        setError(json.error)
+        setEmptyFields(json.emptyFields || [])
+      } else {
+        setName('')
+        setIngredients('')
+        setInstructions('')
+        setPrepTime('')
+        setDifficulty('easy')
+        setError(null)
+        setEmptyFields([])
+        dispatch({ type: 'CREATE_RECIPE', payload: json }) 
+      }
+    } catch (err) {
+      setError('Failed to submit recipe, please try again later.')
     }
   }
 
