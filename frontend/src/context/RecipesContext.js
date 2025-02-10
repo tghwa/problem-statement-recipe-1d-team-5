@@ -16,6 +16,12 @@ export const recipesReducer = (state, action) => {
             return {
                 recipes: state.recipes.filter((recipe) => recipe._id !== action.payload._id), // Remove the recipe by ID
             };
+        case "UPDATE_RECIPE":
+            return {
+                recipes: state.recipes.map((recipe) =>
+                    recipe._id === action.payload._id ? action.payload : recipe
+                ),
+            };
         default:
             console.log("Unknown action type:", action.type);
             return state;
