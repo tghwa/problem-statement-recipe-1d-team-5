@@ -3,7 +3,7 @@ import { useRecipesContext } from "../hooks/useRecipesContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 const RecipeDetails = ({ recipe }) => {
-  const { dispatch } = useRecipesContext();
+  const { dispatch, favorites } = useRecipesContext();
   const { user } = useAuthContext();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
@@ -13,6 +13,9 @@ const RecipeDetails = ({ recipe }) => {
     prepTime: recipe.prepTime,
     difficulty: recipe.difficulty,
   });
+
+  // Check if the recipe is already a favorite
+  const isFavorite = Array.isArray(favorites) && favorites.some((fav) => fav._id === recipe._id);
 
   const handleEditClick = () => {
     setIsEditing(!isEditing);
@@ -35,24 +38,32 @@ const RecipeDetails = ({ recipe }) => {
       ingredients: formData.ingredients.split(","),
     };
 
-    const response = await fetch(
-      `http://localhost:4000/api/recipes/${recipe._id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user.token}`,
-        },
-        body: JSON.stringify(updatedRecipe),
+    try {
+      const response = await fetch(
+        `http://localhost:4000/api/recipes/${recipe._id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+          body: JSON.stringify(updatedRecipe),
+        }
+      );
+
+      const json = await response.json();
+
+      if (response.ok) {
+        dispatch({ type: "UPDATE_RECIPE", payload: json });
+        setIsEditing(false);
       }
-    );
-
-    const json = await response.json();
-
-    if (response.ok) {
-      dispatch({ type: "UPDATE_RECIPE", payload: json });
-      setIsEditing(false);
+    } catch (error) {
+      console.error("Error updating recipe:", error);
     }
+  };
+
+  const handleFavorite = () => {
+    dispatch({ type: "TOGGLE_FAVORITE", payload: recipe });
   };
 
   const handleDelete = async () => {
@@ -60,25 +71,29 @@ const RecipeDetails = ({ recipe }) => {
       return;
     }
 
-    const response = await fetch(
-      `http://localhost:4000/api/recipes/${recipe._id}`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
+    try {
+      const response = await fetch(
+        `http://localhost:4000/api/recipes/${recipe._id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+
+      const json = await response.json();
+
+      if (response.ok) {
+        dispatch({ type: "DELETE_RECIPE", payload: json });
       }
-    );
-
-    const json = await response.json();
-
-    if (response.ok) {
-      dispatch({ type: "DELETE_RECIPE", payload: json });
+    } catch (error) {
+      console.error("Error deleting recipe:", error);
     }
   };
 
   return (
-    <div className="recipe-details">
+    <div className="workouts">
       {isEditing ? (
         <form onSubmit={handleUpdate}>
           <label>Recipe Name:</label>
@@ -147,6 +162,9 @@ const RecipeDetails = ({ recipe }) => {
             <button onClick={handleEditClick}>Edit</button>
             <button onClick={handleDelete} style={{ marginLeft: "10px" }}>
               Delete
+            </button>
+            <button onClick={handleFavorite} style={{ marginLeft: "10px" }}>
+              {isFavorite ? "❤️ Unfavorite" : "♡ Favorite"}
             </button>
           </div>
         </>

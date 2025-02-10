@@ -13,4 +13,6 @@ Sonia:
 3. Search Bar.
 4. Styling of CSS.
 Gaik Hwa:
-Alexa: 1. Add a New Recipe
+Alexa: 
+1. Add a New Recipe
+2. Favorite Function and Section

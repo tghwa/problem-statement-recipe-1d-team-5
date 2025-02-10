@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { useRecipesContext } from "../hooks/useRecipesContext";
 import RecipeDetails from "../components/RecipeDetails";
 import RecipeForm from "../components/RecipeForm";
+import FavoriteRecipes from "../components/FavoriteRecipes";
 import SearchBar from '../components/SearchBar';
+
 import { useAuthContext } from "../hooks/useAuthContext";
 
 const Home = () => {
@@ -66,13 +68,14 @@ const Home = () => {
           </select>
         </div>
 
-        <div className="workouts">
+        <div>
           {sortedRecipes.map((recipe) => (
             <RecipeDetails recipe={recipe} key={recipe._id} />
           ))}
         </div>
       </div>
       <RecipeForm />
+      <FavoriteRecipes />
     </div>
   );
 };

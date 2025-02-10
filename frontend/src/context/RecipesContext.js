@@ -22,6 +22,20 @@ export const recipesReducer = (state, action) => {
                     recipe._id === action.payload._id ? action.payload : recipe
                 ),
             };
+        case 'TOGGLE_FAVORITE':
+            const favorites = Array.isArray(state.favorites) ? state.favorites : [];
+            const isFavorite = favorites.find((r) => r._id === action.payload._id);
+            return {
+                ...state,
+                favorites: isFavorite
+                    ? favorites.filter((r) => r._id !== action.payload._id)
+                    : [...favorites, action.payload]
+            }
+        case 'SET_FAVORITES': 
+            return {
+                ...state,
+                favorites: action.payload,
+            }
         default:
             console.log("Unknown action type:", action.type);
             return state;
@@ -29,7 +43,7 @@ export const recipesReducer = (state, action) => {
 };
 
 export const RecipesContextProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(recipesReducer, { recipes: [] })
+    const [state, dispatch] = useReducer(recipesReducer, { recipes: [], favorites: [] });
 
     return (
         <RecipesContext.Provider value={{ ...state, dispatch }}>

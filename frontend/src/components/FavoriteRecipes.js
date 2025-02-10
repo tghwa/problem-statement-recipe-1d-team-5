@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import RecipeDetails from './RecipeDetails';
 
 const FavoriteRecipes = () => {
-    const { favorites, dispatch } = useRecipesContext();
+    const { favorites = [], dispatch } = useRecipesContext();  // Default to empty array if favorites is undefined
     const { user } = useAuthContext();
 
     // Fetch favorite recipes on component mount
