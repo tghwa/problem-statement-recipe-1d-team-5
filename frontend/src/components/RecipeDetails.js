@@ -55,6 +55,28 @@ const RecipeDetails = ({ recipe }) => {
     }
   };
 
+  const handleDelete = async () => {
+    if (!user) {
+      return;
+    }
+
+    const response = await fetch(
+      `http://localhost:4000/api/recipes/${recipe._id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+
+    const json = await response.json();
+
+    if (response.ok) {
+      dispatch({ type: "DELETE_RECIPE", payload: json });
+    }
+  };
+
   return (
     <div className="recipe-details">
       {isEditing ? (
@@ -121,7 +143,12 @@ const RecipeDetails = ({ recipe }) => {
           <p>
             <strong>Difficulty:</strong> {recipe.difficulty}
           </p>
-          <button onClick={handleEditClick}>Edit</button>
+          <div>
+            <button onClick={handleEditClick}>Edit</button>
+            <button onClick={handleDelete} style={{ marginLeft: "10px" }}>
+              Delete
+            </button>
+          </div>
         </>
       )}
     </div>
