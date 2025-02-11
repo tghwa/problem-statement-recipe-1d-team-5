@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Navbar from './components/Navbar';
+import AiScanner from "./pages/AiScanner";
 // import WorkoutEdit from './pages/WorkoutEdit';
 
 function App() {
@@ -30,6 +31,10 @@ function App() {
               element={!user ? <Signup /> : <Navigate to="/" />}
             />
             {/* <Route path="/edit/:id" element={<WorkoutEdit />} /> */}
+            <Route
+              path="/ai-scanner"
+              element={<AiScanner />}
+            />
           </Routes>
         </div>
       </BrowserRouter>
